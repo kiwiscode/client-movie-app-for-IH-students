@@ -6,7 +6,13 @@ function FilterBar({ onFilter }) {
   const [genre, setGenre] = useState("All");
   const [sortOption, setSortOption] = useState({ type: "", order: "" });
 
-  const { data } = useFetch(MOVIES_API_URL);
+  const { data, fetchData } = useFetch();
+
+  useEffect(() => {
+    fetchData({
+      url: MOVIES_API_URL,
+    });
+  }, []);
 
   const genres = [
     "All",

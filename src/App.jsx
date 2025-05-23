@@ -4,7 +4,7 @@ import MovieDetail from "./pages/MovieDetail";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import useFetch from "./hooks/useFetch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterBar from "./components/FilterBar";
 import { MOVIES_API_URL_WITH_QUERIES } from "./constants/env";
 
@@ -27,12 +27,19 @@ function App() {
     queryParams.append("order", sortOption.order);
   }
 
-  const { data, error, loading } = useFetch(
-    MOVIES_API_URL_WITH_QUERIES(queryParams.toString())
-  );
+  const { data, error, loading, fetchData } = useFetch();
+
+  useEffect(() => {
+    fetchData({
+      url: MOVIES_API_URL_WITH_QUERIES(queryParams.toString()),
+    });
+  }, [genre, sortOption]);
 
   // Get the filtered results coming from FilterBar
   const handleFilteredResults = (genre, sortOption) => {
+    console.log("genre:", genre);
+    console.log("sort option:", sortOption);
+
     setGenre(genre);
     setSortOption(sortOption);
   };

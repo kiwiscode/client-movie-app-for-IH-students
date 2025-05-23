@@ -13,7 +13,13 @@ function Navbar({ onSearch }) {
     setSearchTerm(e.target.value);
   };
 
-  const { data, error, loading } = useFetch(SEARCH_API_URL(searchTerm));
+  const { data, error, loading, fetchData } = useFetch();
+
+  useEffect(() => {
+    fetchData({
+      url: SEARCH_API_URL(searchTerm),
+    });
+  }, [searchTerm]);
 
   useEffect(() => {
     onSearch(searchTerm, data, error, loading);
@@ -21,7 +27,7 @@ function Navbar({ onSearch }) {
 
   return (
     <nav className="sticky top-0 z-50 transition-all duration-300 backdrop-blur-md bg-white/30 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div
