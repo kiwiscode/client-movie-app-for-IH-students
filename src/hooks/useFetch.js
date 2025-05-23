@@ -1,47 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
-const useFetch = (url, options = {}) => {
+const useFetch = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const cancelSource = useRef(null);
 
-  useEffect(() => {
+  const fetchData = async ({ url, method = "get", ...options }) => {
     if (!url) return;
 
-    const source = axios.CancelToken.source();
+    if (cancelSource.current) {
+      cancelSource.current.cancel("Cancelled previous request");
+    }
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    cancelSource.current = axios.CancelToken.source();
+    setLoading(true);
+    setError(null);
 
-      const method = options.method || "get";
-
-      try {
-        const response = await axios({
-          url,
-          method,
-          cancelToken: source.token,
-          ...options,
-        });
-        setData(response.data);
-      } catch (err) {
-        if (!axios.isCancel(err)) {
-          setError(err);
-        }
-      } finally {
-        setLoading(false);
+    try {
+      const response = await axios({
+        url,
+        method,
+        cancelToken: cancelSource.current.token,
+        ...options,
+      });
+      setData(response.data);
+    } catch (err) {
+      if (!axios.isCancel(err)) {
+        setError(err);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-
-    return () => {
-      source.cancel("Request canceled by cleanup");
-    };
-  }, [url, JSON.stringify(options)]);
-
-  return { data, setData, error, loading };
+  return { data, error, loading, fetchData, setData };
 };
 
 export default useFetch;
