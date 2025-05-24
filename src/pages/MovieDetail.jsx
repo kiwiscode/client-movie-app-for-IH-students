@@ -57,7 +57,7 @@ function MovieDetail() {
         </div>
 
         {/* Movie Info */}
-        <div className="md:w-1/2 w-full p-4">
+        <div className="md:w-1/2 w-full py-4">
           <h2 className="text-2xl font-semibold mb-2">{movie.title}</h2>
           <p className="text-gray-600 text-sm mb-2">
             <span className="font-medium">Year:</span> {movie.year}
