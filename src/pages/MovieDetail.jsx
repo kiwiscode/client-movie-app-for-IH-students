@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import useFetch from "../hooks/useFetch";
 import { MOVIE_DETAIL_API_URL, MOVIE_REVIEW_API_URL } from "../constants/env";
 import { useEffect, useState } from "react";
+import FavoriteButton from "../components/FavoriteButton";
 
 function MovieDetail() {
   const { movieId } = useParams();
@@ -80,6 +81,8 @@ function MovieDetail() {
               Average User Rating: {movie.averageUserRating}
             </p>
           </div>
+          {/* Favorite Heart Icon */}
+          <FavoriteButton movie={movie} padding={"pt-4"} />
         </div>
       </div>
 

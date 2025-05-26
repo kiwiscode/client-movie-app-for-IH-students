@@ -1,40 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Star, Heart, HeartPulseIcon } from "lucide-react";
+import { Star, Heart } from "lucide-react";
+import FavoriteButton from "./FavoriteButton";
 
 function MovieCard({ movie }) {
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const maxDescriptionLength = 120;
 
   const toggleDescription = (e) => {
     e.stopPropagation(); // Prevent Link navigation
     setShowFullDescription((prev) => !prev);
   };
-
-  const toggleFavorite = (e, movieId) => {
-    e.stopPropagation();
-
-    setIsFavorite((prev) => !prev);
-
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-    let updatedFavorites;
-    if (favorites.includes(movieId)) {
-      // Remove if exist
-      updatedFavorites = favorites.filter((id) => id !== movieId);
-    } else {
-      // Add if not exist
-      updatedFavorites = [...favorites, movieId];
-    }
-
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-  };
-
-  useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setIsFavorite(favorites.includes(movie._id));
-  }, [movie._id]);
 
   const renderDescription = () => {
     if (!movie.description) return null;
@@ -111,19 +87,7 @@ function MovieCard({ movie }) {
         </div>
       </div>
       {/* Favorite Heart Icon */}
-      <button
-        onClick={(e) => toggleFavorite(e, movie._id)}
-        className="p-4 w-full text-right"
-      >
-        <Heart
-          className={`h-6 w-6 transition-all duration-300 ${
-            isFavorite
-              ? "fill-red-500 text-red-500 heart-pulse"
-              : "text-gray-400"
-          }`}
-          strokeWidth={1.5}
-        />
-      </button>
+      <FavoriteButton movie={movie} padding={"p-4"} />
     </div>
   );
 }
