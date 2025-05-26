@@ -9,3 +9,4 @@ export const MOVIES_API_URL_WITH_QUERIES = (queryParams) =>
   `${API_BASE_URL}/api/movies?${queryParams.toString()}`;
 export const MOVIE_REVIEW_API_URL = (movieId) =>
   `${API_BASE_URL}/api/reviews/${movieId}`;
+export const FAVORITE_MOVIES_API_URL = () => `${API_BASE_URL}/api/favorites`;

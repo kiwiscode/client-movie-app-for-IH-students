@@ -7,6 +7,7 @@ import useFetch from "./hooks/useFetch";
 import { useEffect, useState } from "react";
 import FilterBar from "./components/FilterBar";
 import { MOVIES_API_URL_WITH_QUERIES } from "./constants/env";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const [baseFiltered, setBaseFiltered] = useState([]);
@@ -86,6 +87,7 @@ function App() {
           }
         />
         <Route path="/movies/:movieId" element={<MovieDetail />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
 
       <Footer />
