@@ -78,7 +78,7 @@ function Navbar({ onSearch }) {
 
           {/* Menu - Desktop */}
           <div className="hidden md:flex space-x-6 text-gray-700 font-medium items-center">
-            <a href="#" className="hover:text-blue-600">
+            <a href="/" className="hover:text-blue-600">
               Home
             </a>
 
@@ -88,7 +88,7 @@ function Navbar({ onSearch }) {
             >
               Search
             </button>
-            <a href="#" className="hover:text-blue-600">
+            <a href="/favorites" className="hover:text-blue-600">
               Favorites
             </a>
           </div>
@@ -135,7 +135,7 @@ function Navbar({ onSearch }) {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2 bg-white/30 backdrop-blur-md">
-          <a href="#" className="block text-gray-700 hover:text-blue-600">
+          <a href="/" className="block text-gray-700 hover:text-blue-600">
             Home
           </a>
           <button
@@ -144,7 +144,10 @@ function Navbar({ onSearch }) {
           >
             Search
           </button>
-          <a href="#" className="block text-gray-700 hover:text-blue-600">
+          <a
+            href="/favorites"
+            className="block text-gray-700 hover:text-blue-600"
+          >
             Favorites
           </a>
         </div>
